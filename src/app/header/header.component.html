@@ -1,0 +1,23 @@
+<header class="toolbar-container">
+  <mat-toolbar class="toolbar" color="primary" fxLayout="row" fxLayoutAlign="space-between">
+    <a href="/" id="logo-link" matRipple>
+      <img src="/assets/ico/cryptocurrency.svg" class="header-logo" alt="logo">
+    </a>
+
+    <mat-nav-list class="toolbar-item-list" fxLayout="row" fxLayoutAlign="space-between">
+      <a href="/" mat-list-item>
+        Main Menu
+      </a>
+      <a href="/advanced" mat-list-item>
+        Advanced Settings
+      </a>
+      <a href="/config" mat-list-item>
+        Edit Configfile
+      </a>
+      <a href="/pi-settings" mat-list-item>
+        Pi-Settings
+      </a>
+    </mat-nav-list>
+    <button (click)="save()" mat-button><span class="material-icons">save</span> Save / Apply</button>
+  </mat-toolbar>
+</header>
