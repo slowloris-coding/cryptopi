@@ -1,7 +1,7 @@
 #!/bin/bash
 getDistPath () {
     cd ..;
-    cd dist/ManagementBoard/
+    cd dist/
     output=$(pwd)
     cd ..;
     cd artifacts/;
@@ -26,7 +26,6 @@ cecho () {
     printf "${RED}${1}${NC}\n";
 }
 
-su sudo -
 cecho "Updating system"
 sudo apt-get update
 sudo apt-get upgrade -y
@@ -38,9 +37,20 @@ gecho "Install finished"
 echo " "
 cecho "Setting up Document root"
 distPath=$(getDistPath)
-sed -i "s|DocumentRoot.+|DocumentRoot $distPath|g" /etc/apache2/sites-enabled/000-default.conf
+echo $distPath
+sudo sed -i "s|DocumentRoot.*|DocumentRoot $distPath|g" /etc/apache2/sites-enabled/000-default.conf
 gecho "Document root adjusted"
+cecho "Setting permissions for the webserver"
+sudo cat <<EOT >> /etc/apache2/apache2.conf
+<Directory $distPath>
+        Options Indexes FollowSymLinks
+        AllowOverride None
+        Require all granted
+</Directory>
+EOT
+
+gecho "Permissions set"
 cecho "Restarting webserver"
-systemctl restart apache2
+sudo systemctl restart apache2
 ip=$(hostname -I | cut -d ' ' -f1)
 gecho "Webserver restarted ---> Managementpage is now available under http://$ip/"
