@@ -48,7 +48,6 @@ sudo cat <<EOT >> /etc/apache2/apache2.conf
         Require all granted
 </Directory>
 EOT
-
 gecho "Permissions set"
 cecho "Restarting webserver"
 sudo systemctl restart apache2
