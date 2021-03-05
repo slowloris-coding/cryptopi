@@ -15,14 +15,14 @@ echo "-------------------------"
 echo "https://github.com/slowloris-coding"
 
 #==========================
-# FORMATIERUNGEN & EFFEKTE
+# FORMATING & EFFECTS
 #==========================
 
-NEWLINE='\n'        #Newline mit printf
+NEWLINE='\n'        #Newline for printf
 
-N_ATTRIB='\033[0m'   #No Attribute, entfernen aller Formatierungs Atributte
+N_ATTRIB='\033[0m'   # "No Attribute" --> disabling all effects
 
-BOLD='\033[1m'      #Fett
+BOLD='\033[1m'      # "Bold" --> all text written after setting this will be bold when output
 DIM='\033[2m'
 UNDERLINED='\033[4m'
 BLINK='\033[5m'
