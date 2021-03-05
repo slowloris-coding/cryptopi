@@ -32,6 +32,17 @@ menu_symbols = [
           0b00000,
           0b00000
           ],
+    #Marketcap
+          [
+        0b00000,
+        0b01110,
+        0b01010,
+        0b11111,
+        0b11111,
+        0b11111,
+        0b11111,
+        0b00000
+          ]
 ]
 
 change = [
@@ -85,29 +96,28 @@ backlight_symbol = [
 
 backlight_test = [
     [
-    0b01001,
-    0b00110,
-    0b00010,
-    0b11110,
-    0b01111,
-    0b01000,
-    0b01100,
-    0b10010
+    0b01110,
+	0b11111,
+	0b11110,
+	0b11100,
+	0b11100,
+	0b11110,
+	0b11111,
+	0b01110
     ],
     [
-    0b01001,
-    0b01110,
-    0b00010,
-    0b11110,
-    0b01111,
-    0b01000,
-    0b01110,
-    0b10010
+	0b01110,
+	0b11001,
+	0b10010,
+	0b10100,
+	0b10100,
+	0b10010,
+	0b11001,
+	0b01110
     ]
 ]
 
 def backlight_ctl(state):
-    driver.lcd_home
     lastLine= 0x80 + 0x54
     driver.lcd_load_custom_chars(backlight_test)
     driver.lcd_write(lastLine+18)

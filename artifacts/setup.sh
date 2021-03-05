@@ -26,6 +26,12 @@ cecho () {
     printf "${RED}${1}${NC}\n";
 }
 
+if [ `whoami` != 'root' ]
+  then
+    recho "You must be root to do this!"
+    exit
+fi
+
 cecho "Updating system"
 sudo apt-get update
 sudo apt-get upgrade -y
@@ -41,6 +47,7 @@ echo $distPath
 sudo sed -i "s|DocumentRoot.*|DocumentRoot $distPath|g" /etc/apache2/sites-enabled/000-default.conf
 gecho "Document root adjusted"
 cecho "Setting permissions for the webserver"
+
 sudo cat <<EOT >> /etc/apache2/apache2.conf
 <Directory $distPath>
         Options Indexes FollowSymLinks
@@ -54,19 +61,19 @@ sudo systemctl restart apache2
 ip=$(hostname -I | cut -d ' ' -f1)
 gecho "Webserver restarted ---> Managementpage is now available under http://$ip/"
 cecho "Creating services"
-cat > /etc/systemd/system/button-listener.service << EOF
+cat > /etc/systemd/system/listener.service << EOF
 [Unit]
-Description=Cryptopi Listener
+Description=Cryptopi input Listener
 
 [Service]
 User=root
 WorkingDirectory=/opt/cryptopi/artifacts/helpers
-ExecStart=python3 /opt/cryptopi/artifacts/helpers/listener.py
+ExecStart=python3 /opt/cryptopi/artifacts/helpers/listener.sh
 Restart=always
 
 [Install]
 WantedBy=multi-user.target
 EOF
 sudo systemctl daemon-reload
-sudo systemctl start button-listener.service
+sudo systemctl start listener.service
 gecho "Services created"
