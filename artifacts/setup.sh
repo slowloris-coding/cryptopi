@@ -53,3 +53,20 @@ cecho "Restarting webserver"
 sudo systemctl restart apache2
 ip=$(hostname -I | cut -d ' ' -f1)
 gecho "Webserver restarted ---> Managementpage is now available under http://$ip/"
+cecho "Creating services"
+cat > /etc/systemd/system/button-listener.service << EOF
+[Unit]
+Description=Cryptopi Listener
+
+[Service]
+User=root
+WorkingDirectory=/opt/cryptopi/artifacts/helpers
+ExecStart=python3 /opt/cryptopi/artifacts/helpers/listener.py
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+EOF
+sudo systemctl daemon-reload
+sudo systemctl start button-listener.service
+gecho "Services created"
